@@ -1,0 +1,34 @@
+Vagrant.configure("2") do |config|
+  # config.vm.box = "ubuntu/trusty64" #16.04 lts
+  
+  config.vm.provider "virtualbox" do |vb|
+    # Display the VirtualBox GUI when booting the machine
+    # vb.gui = true
+  
+    # Customize the amount of memory on the VM:
+    vb.memory = "8192"
+    vb.cpus = 4
+  end
+  config.vm.network "public_network"
+
+  config.vm.define "manager" do |node|
+    node.vm.box = "ubuntu/focal64" #20.04 lts
+  end
+
+  config.vm.define "host01" do |node|
+    node.vm.box = "ubuntu/focal64" #20.04 lts
+    # node.vm.network "forwarded_port", guest: 80, host: 8001
+  end
+
+  config.vm.define "host02" do |node|
+    node.vm.box = "ubuntu/focal64" #20.04 lts
+    # node.vm.network "forwarded_port", guest: 80, host: 8002
+  end
+
+  config.vm.define "host03" do |node|
+    node.vm.box = "ubuntu/focal64" #20.04 lts
+    # node.vm.network "forwarded_port", guest: 80, host: 8003
+  end
+
+  config.vm.provision "shell", path: "script.sh"
+end
